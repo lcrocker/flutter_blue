@@ -350,19 +350,27 @@ public class FlutterBluePlugin implements MethodCallHandler, RequestPermissionsR
                     return;
                 }
 
+		boolean _res;
+
                 // Set characteristic to new value
-                if(!characteristic.setValue(request.getValue().toByteArray())){
+		_res = characteristic.setValue(request.getValue().toByteArray());
+		Log.d(TAG, "setValue: " + _res);
+
+		if (! _res) {
                     result.error("write_characteristic_error", "could not set the local value of characteristic", null);
                 }
 
                 // Apply the correct write type
-                if(request.getWriteType() == Protos.WriteCharacteristicRequest.WriteType.WITHOUT_RESPONSE) {
+		if(request.getWriteType() == Protos.WriteCharacteristicRequest.WriteType.WITHOUT_RESPONSE) {
                     characteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE);
                 } else {
                     characteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT);
                 }
 
-                if(!gattServer.writeCharacteristic(characteristic)){
+		_res = gattServer.writeCharacteristic(characteristic);
+		Log.d(TAG, "writeCharacteristic: " + _res);
+
+		if (! _res) {
                     result.error("write_characteristic_error", "writeCharacteristic failed", null);
                     return;
                 }
@@ -744,7 +752,7 @@ public class FlutterBluePlugin implements MethodCallHandler, RequestPermissionsR
     private final BluetoothGattCallback mGattCallback = new BluetoothGattCallback() {
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-            Log.d(TAG, "onConnectionStateChange: ");
+            Log.d(TAG, "onConnectionStateChange: " + newState);
             channel.invokeMethod("DeviceState", ProtoMaker.from(gatt.getDevice(), newState).toByteArray());
         }
 
