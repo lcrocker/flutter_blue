@@ -37,7 +37,6 @@ class FlutterBlue {
   LogLevel get logLevel => _logLevel;
 
   /// Checks whether the device supports Bluetooth
-<<<<<<< HEAD
   Future<bool> get isAvailable async {
     final bool isAvailable = await _channel.invokeMethod('isAvailable');
     return isAvailable;
@@ -48,13 +47,6 @@ class FlutterBlue {
     final bool isOn = await _channel.invokeMethod('isOn');
     return isOn;
   }
-=======
-  Future<bool> get isAvailable =>
-      _channel.invokeMethod('isAvailable').then<bool>((d) => d);
-
-  /// Checks if Bluetooth functionality is turned on
-  Future<bool> get isOn => _channel.invokeMethod('isOn').then<bool>((d) => d);
->>>>>>> 6f6fa30d77c7d935ec2ecf226b19448abd33cb04
 
   /// Gets the current state of the Bluetooth module
   Future<BluetoothState> get state {
@@ -118,17 +110,10 @@ class FlutterBlue {
   /// Timeout closes the stream after a specified [Duration]
   /// To cancel connection to device, simply cancel() the stream subscription
   Stream<BluetoothDeviceState> connect(
-<<<<<<< HEAD
       BluetoothDevice device, {
       Duration timeout,
       bool autoConnect = true,
     }) async* {
-=======
-    BluetoothDevice device, {
-    Duration timeout,
-    bool autoConnect = true,
-  }) async* {
->>>>>>> 6f6fa30d77c7d935ec2ecf226b19448abd33cb04
     var request = protos.ConnectRequest.create()
       ..remoteId = device.id.toString()
       ..androidAutoConnect = autoConnect;

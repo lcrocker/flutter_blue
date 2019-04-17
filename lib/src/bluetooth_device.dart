@@ -30,11 +30,7 @@ class BluetoothDevice {
     await FlutterBlue.instance._channel
         .invokeMethod('discoverServices', id.toString());
 
-<<<<<<< HEAD
     return await response;
-=======
-    return response;
->>>>>>> 6f6fa30d77c7d935ec2ecf226b19448abd33cb04
   }
 
   /// Returns a list of Bluetooth GATT services offered by the remote device
@@ -85,12 +81,7 @@ class BluetoothDevice {
 
     var response = FlutterBlue.instance._descriptorReadChannel
         .receiveBroadcastStream()
-<<<<<<< HEAD
-        .map((buffer) =>
-    new protos.ReadDescriptorResponse.fromBuffer(buffer))
-=======
         .map((buffer) => new protos.ReadDescriptorResponse.fromBuffer(buffer))
->>>>>>> 6f6fa30d77c7d935ec2ecf226b19448abd33cb04
         .where((p) =>
             (p.request.remoteId == request.remoteId) &&
             (p.request.descriptorUuid == request.descriptorUuid) &&
