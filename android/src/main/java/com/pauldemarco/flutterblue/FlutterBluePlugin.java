@@ -203,11 +203,12 @@ public class FlutterBluePlugin implements MethodCallHandler, RequestPermissionsR
                 }
 
                 // If device was connected to previously but is now disconnected, attempt a reconnect
-                if(mGattServers.containsKey(deviceId) && !isConnected) {
-                    if(!mGattServers.get(deviceId).connect()){
-                        result.error("reconnect_error", "error when reconnecting to device", null);
-                        return;
+                if (mGattServers.containsKey(deviceId) && !isConnected) {
+                    if (mGattServers.get(deviceId).connect()){
+			result.success(null);
+			break;
                     }
+		    mGattServers.remove(deviceId);
                 }
 
                 // New request, connect and add gattServer to Map
@@ -216,6 +217,7 @@ public class FlutterBluePlugin implements MethodCallHandler, RequestPermissionsR
 			mGattCallback,
 			BluetoothDevice.TRANSPORT_LE);
                 mGattServers.put(deviceId, gattServer);
+
                 result.success(null);
                 break;
             }
