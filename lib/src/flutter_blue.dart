@@ -112,7 +112,7 @@ class FlutterBlue {
   Stream<BluetoothDeviceState> connect(
       BluetoothDevice device, {
       Duration timeout,
-      bool autoConnect = true,
+      bool autoConnect = false,
     }) async* {
     var request = protos.ConnectRequest.create()
       ..remoteId = device.id.toString()
